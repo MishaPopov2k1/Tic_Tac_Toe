@@ -28,55 +28,40 @@ const goButton = document.querySelector('.btn-go')
 let fieldOfСrosses = [];
 let fieldOfZeros = [];
 
-function makeButtonActive(button) {
-    button.classList.add('active');
-
-}
-
-function controlActiveBtn(btn) {
+/**
+ * Функция для работы с табами
+ * @param {*} btn 
+ * @returns 
+ */
+function makeTabActive(btn) {
     const menu = document.querySelector('.menu-list');
-    console.log(' menu: ', menu);
     const activeBtn = menu.querySelector('.active');
-    console.log('activeBtn: ', activeBtn);
+    
+    if (btn.classList.contains('active-game')) {
+        btn.classList.toggle('active-game');
+        return;
+    }
 
     if (activeBtn) {
-
         resetPlayingField(playingField, gameMenu);
-        activeBtn.classList.remove('active');
+
         if (btn === activeBtn) {
+            activeBtn.classList.remove('active');
             return;
         }
         else {
-            makeButtonActive(btn);
+            activeBtn.classList.remove('active');
+            btn.classList.add('active')
+            //makeButtonActive(btn);
         }
 
     } else {
-        makeButtonActive(btn);
+        btn.classList.add('active')
+        //makeButtonActive(btn);
     }
 }
 
 function createPlayingField(playingField, n, cell, k, btn) {
-
-    const menu = document.querySelector('.menu-list');
-    console.log(' menu: ', menu);
-    const activeBtn = menu.querySelector('.active');
-    console.log('activeBtn: ', activeBtn);
-
-    if (activeBtn) {
-
-        resetPlayingField(playingField, gameMenu);
-        activeBtn.classList.remove('active');
-        if (btn === activeBtn) {
-            return;
-        }
-        else {
-            makeButtonActive(btn);
-        }
-
-    } else {
-        makeButtonActive(btn);
-    }
-
     fieldOfСrosses = createMatrix(n);
     fieldOfZeros = createMatrix(n);
 
@@ -109,18 +94,17 @@ function createPlayingField(playingField, n, cell, k, btn) {
 playButton3x3.addEventListener('click', (e) => {
     //  controlActiveBtn(e.target);
     k = 3;
-     createPlayingField(playingField, 3, cell, k, e.target);
+    createPlayingField(playingField, 3, cell, k, e.target);
+    makeTabActive(e.target);
     conditionForNxN.classList.add('hidden');
 });
 
 
 playButtonNxN.addEventListener('click', (e) => {
 
-     resetPlayingField(playingField, gameMenu);
-
-    //  controlActiveBtn(e.target);
-
-    conditionForNxN.classList.remove('hidden');
+    resetPlayingField(playingField, gameMenu);
+    makeTabActive(e.target);
+    conditionForNxN.classList.toggle('hidden');
 
 });
 
@@ -128,8 +112,14 @@ goButton.addEventListener('click', () => {
 
     n = + document.querySelector('.input-for-N').value;
     k = + document.querySelector('.input-for-K').value;
-    console.log(n, k);
+
+    if (n == 0 || k == 0) {
+        alert('Некорректные данные!')
+        return;
+    }
+
     conditionForNxN.classList.add('hidden');
+    playButtonNxN.classList.add('active-game');
 
     createPlayingField(playingField, n, cell, k, playButtonNxN);
 })

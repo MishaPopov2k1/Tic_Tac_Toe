@@ -55,10 +55,8 @@ export function resetGameCells(playingField) {
     win = false;
     for (const row of playingField.children) {
         for (const cell of row.children) {
-            cell.lastElementChild.classList.add('hidden');
-            cell.firstElementChild.classList.add('hidden');
-            cell.classList.remove('paint__over-green');
-            cell.classList.remove('paint__over-yellow');
+            cell.innerHTML = '';
+            cell.className = 'cell';
         }
     }
     moveNumber = 0;
@@ -139,13 +137,12 @@ function getIndexWinLeftDiagonal(arr) {
 
 
 function сheckIfWinningRow(row, k) {
-    console.log('row: ', row, k);
 
     let indexRowI = [];
     let counter = 0;
 
     for (let i = 0; i < row.length; i++) {
-        console.log('count: ', counter, 'el', row[i], 'i', i);
+        
 
         if (row[i] === 0) {
             counter = 0;
@@ -159,7 +156,7 @@ function сheckIfWinningRow(row, k) {
         }
         if (counter === k) {
 
-            console.log('indexRowI: ', indexRowI);
+            
             return indexRowI;
 
         }
@@ -189,7 +186,7 @@ function getIndexWinRow(arr, k) {
         
 
         if (indArr) {
-            console.log('indArr: ', indArr);
+            
             indexRow = indArr;
             indexJ = i;
         }
@@ -203,7 +200,7 @@ function getIndexWinRow(arr, k) {
         indexRow[i] = [indexJ, indexRow[i]];
         //indexRow[i] = indexRow[i].split('').map(Number);
     });
-    console.log('indexRow', indexRow);
+    
     return indexRow;
 };
 
@@ -267,23 +264,25 @@ export function updateСell(event, i, j, fieldOfСrosses, fieldOfZeros, playingF
     if (win === true) {
         return;
     }
-
+    
     let target = event.target;
 
-    if (!moveNumber) {
-        target.innerHTML = templateCross;
-        fieldOfСrosses[i][j] = 1;
-        playerMoveNumber.innerHTML = 'Ходят нолики ⭕';
+    if(target.classList.contains('active-cell') || target.classList.contains('image-symbol')){
+        return;
+    }
 
-    } else {
+    if (moveNumber) {
         target.innerHTML = templateZero;
         fieldOfZeros[i][j] = 1;
         playerMoveNumber.innerHTML = 'Ходят крестики ❌';
-
+    } else {
+        target.innerHTML = templateCross;
+        fieldOfСrosses[i][j] = 1;
+        playerMoveNumber.innerHTML = 'Ходят нолики ⭕';
     }
 
+    target.classList.add('active-cell');
     moveNumber = !moveNumber;
-
 
     let fieldOfСrossesTranspone = transposeMatrix(fieldOfСrosses);
     let fieldOfZerosTranspone = transposeMatrix(fieldOfZeros);
@@ -313,7 +312,7 @@ export function updateСell(event, i, j, fieldOfСrosses, fieldOfZeros, playingF
             paintOverAllCells(playingField);
         }
     }*/
-    console.log(fieldOfСrosses);
-    console.log(fieldOfZeros);
+    
+    
 
 }
