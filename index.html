@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <!-- <script src="js/main.js" defer></script> -->
+    <!-- <script src="js/draw.js" defer></script> -->
+    <!-- <script src="js/gameLogic.js" defer></script> -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&display=swap" rel="stylesheet">
+    <title>TIC-TAC-Toe</title>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-wrapper">
+                <div class="header-main">
+                    <a class="header__logo" href="#">
+                        <img class="logo-img" src="images/logo.png" alt="logo">
+                    </a>
+                    <p class="title__tic-tac-toe"><b>Tic Tac <span class="color-word">Toe</span></b></p>
+                    <nav class="menu">
+                        <ul class="menu-list">
+                            <li class="menu-list__item">
+                                <a class="menu-list__link button-play-3x3" href="#">
+                                    Играть 3x3
+                                </a>
+                            </li>
+                            <li class="menu-list__item">
+                                <a class="menu-list__link button-play-NxN" href="#">
+                                    Играть NxN
+                                </a>
+                            </li>
+                            <li class="menu-list__item">
+                                <a class="menu-list__link" href="#">
+                                    Дизайн поля
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="playing__field-wrapper">
+        <table class="playing__field">
+
+        </table>
+
+        <template id="cell">
+            <td class="cell " data-index="00">
+                <!-- <img class="image-symbol cross-img hidden" src="images/cross.png" alt="cross"> -->
+                <!-- <img class="image-symbol zero-img hidden " src="images/zero.png" alt="zero"> -->
+            </td>
+        </template>
+
+        <div class="condition-for-NxN hidden">
+            <p class="text-condition dimension">Введите размерность игрового поля (NxN) <input class="input input-for-N" type="text" ></p>
+            <p class="text-condition K ">Введите количество символов для победы K<input class="input input-for-K" type="text" ></p>
+            <a class="btn-go button " href="#">Поехали!</a>
+        </div>
+
+        <section class="menu-section hidden ">
+
+            <p class="player__move-number">Ходят крестики ❌</p>
+
+            <div class="player-icons">
+                <img class="image-symbol cross-img " src="images/cross.png" alt="cross">
+                <img class="image-symbol zero-img " src="images/zero.png" alt="zero">
+            </div>
+
+            <div class="game-score">
+                <p class="game-score-for-cross game-score-for-player"> 0 </p>
+                <p class="game-score-for-zeros game-score-for-player"> 0 </p>
+            </div>
+
+            <div class="btn-for-play">
+                <a class="button button-play-again">Играть снова</a>
+                <a class="btn-restart">
+                    <img class="img-restart" src="images/circular-arrows (1).png" alt="restart">
+                </a>
+            </div>
+        </section>
+    </div>
+    <script src="dist/bundle.js"></script>
+</body>
+
+</html>

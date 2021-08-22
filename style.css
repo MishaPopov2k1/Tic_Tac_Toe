@@ -1,0 +1,234 @@
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    line-height: 27px;
+    font-weight: 300;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+}
+
+.container {
+    max-width: 1220px;
+    padding: 0 10px;
+    margin: 0 auto;
+}
+
+.header-main {
+    display: flex;
+    padding: 10px 0 15px;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: solid 3px rgb(96, 30, 158);
+    margin-bottom: 35px;
+}
+
+.logo-img {
+    margin-right: 20px;
+    width: 100px;
+    height: 100px;
+    filter: drop-shadow(2px 2px 3px blueviolet);
+}
+
+.title__tic-tac-toe {
+    font-size: 35px;
+    font-style: bold;
+}
+
+.color-word {
+    color: rgb(96, 30, 158);
+    filter: drop-shadow(30px 34px 2px rgb(96, 30, 158));
+}
+
+.menu-list {
+    display: flex;
+    list-style: none;
+}
+
+.menu-list__link { 
+    font-size: 22px;
+    padding: 10px 20px;
+    margin-right: 150px;
+    box-shadow: 0px 0px 0px 0.2px rgb(96, 30, 158);
+    transition: box-shadow 0.2s linear;
+    margin: 0.5em;
+    border-radius: 4px;
+}
+
+.menu-list__link:hover {
+    color:rgb(96, 30, 158);
+    box-shadow: 1px 1px 8px 0.1px rgb(96, 30, 158);
+}
+
+.playing__field-wrapper{
+    display: flex;
+    max-width: 1000px;
+    padding: 0 10px;
+    margin: 0 auto;
+}
+
+.playing__field {
+    margin-top: 75px;
+    margin-left: 75px;
+}
+
+
+.cell {
+    align-items: center;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    background: #ecdef0;
+    box-shadow:2px 2px rgb(165, 94, 231), 0em 0 7.4em blueviolet;
+    border-radius: 45px;
+}
+
+.image-symbol {
+    width: 92px;
+    height: auto;
+}
+
+.condition-for-NxN {
+    display: block;
+    align-items: center;
+    
+}
+
+.text-condition {
+    font-size: 22px;
+    margin-right: 25px;
+    /* filter: drop-shadow(2px 2px 24px blueviolet); */
+}
+
+.input {
+    height: 35px;
+    width: 60px;
+    margin-left: 25px;
+    border-radius: 2px;
+    border-color: blueviolet;
+    filter: drop-shadow(2px 2px 1px blueviolet);
+    transition: filter 0.3s linear;
+}
+
+.input:focus {
+    outline: none;
+    filter: drop-shadow(55px 24px 2px blueviolet);
+}
+
+.hidden {
+    display: none;
+}
+
+.menu-section {
+    width: 300px;
+    height: auto;
+    margin-top: 30px;
+    padding: 15px;
+    justify-content: space-between;
+    text-align: center; 
+    margin-left: 50px;
+}
+
+.player__move-number {
+    font-size: 24px;
+    margin: 0;
+    margin-bottom: 25px;
+    margin-right: 25px;
+
+}
+
+.player-icons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cross-img {
+    filter: drop-shadow(2px 2px 3px rgb(230, 18, 3));
+}
+
+.zero-img {
+    filter: drop-shadow(2px 2px 3px blue);
+}
+
+.game-score {
+    justify-content: space-between;
+    display: flex;
+    font-size: 26px;
+}
+
+.game-score-for-player {
+    padding: 15px;
+    border-radius: 15%;
+    box-shadow:2px 2px rgb(165, 94, 231), 0em 0 3.4em blueviolet;
+}
+
+.game-score-for-cross {
+    margin-left: 25px;
+}
+
+.game-score-for-zeros {
+    margin-right: 25px;
+}
+
+.btn-for-play {
+    display: flex;
+}
+
+.button { 
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 20px;
+    font-size: 20px;    
+    background: rgb(96 30 158);
+    padding: 15px 35px 15px 35px;
+    box-shadow: 0px 0px 0px 0.2px rgb(96 30 158);
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    transition: box-shadow 0.2s linear;
+}
+
+.button-play-again:hover{
+    background:  #fff;
+    color:  rgb(96 30 158);
+    border-color: blueviolet;
+}
+
+.btn-restart{
+    margin-top: 25px;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.img-restart{
+    transition: transform 1s ease;
+    /* filter: drop-shadow(2px 2px 3px blueviolet); */
+    width: 50px;
+    height: 50px;
+}
+
+.active{
+    color:rgb(96, 30, 158);
+    box-shadow: 1px 1px 8px 0.1px rgb(96, 30, 158);
+}
+
+.rotate {
+    transform: rotate(760deg);
+}
+
+.paint__over-green {
+    background: rgb(39, 204, 102); 
+}
+
+.paint__over-yellow {
+    background: rgb(255, 227, 148); 
+}
