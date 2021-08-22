@@ -142,7 +142,7 @@ function сheckIfWinningRow(row, k) {
     let counter = 0;
 
     for (let i = 0; i < row.length; i++) {
-        
+
 
         if (row[i] === 0) {
             counter = 0;
@@ -156,7 +156,7 @@ function сheckIfWinningRow(row, k) {
         }
         if (counter === k) {
 
-            
+
             return indexRowI;
 
         }
@@ -183,10 +183,10 @@ function getIndexWinRow(arr, k) {
 
     arr.forEach((el, i) => {
         let indArr = сheckIfWinningRow(el, k);
-        
+
 
         if (indArr) {
-            
+
             indexRow = indArr;
             indexJ = i;
         }
@@ -200,7 +200,7 @@ function getIndexWinRow(arr, k) {
         indexRow[i] = [indexJ, indexRow[i]];
         //indexRow[i] = indexRow[i].split('').map(Number);
     });
-    
+
     return indexRow;
 };
 
@@ -258,61 +258,201 @@ export function getIndexesOfTheWinningStrategy(arr, arrTransponse, k) {
 
 }
 
+function checkDiagonal(matrix, i, j, k) {
+    var outputCoordinates = [];
+
+    for(let i_index = 0, counter = 0, row = i, diagonal = j; i_index < matrix[i].length; i_index++, row++, diagonal++){
+        if (row >= matrix[i].length || 
+            row < 0 || 
+            diagonal >= matrix[i].length || 
+            diagonal < 0) {
+            break;
+        } else if(matrix[row][diagonal] == 1 ) {
+            outputCoordinates.push([row, diagonal]);
+            counter++;
+
+            if(counter == k){
+                return outputCoordinates;
+            }
+        }else{
+            outputCoordinates = [];
+            counter = 0;
+        }
+    }
+
+    outputCoordinates = [];
+
+    for(let i_index = 0, counter = 0, row = i, diagonal = j; i_index < matrix[i].length; i_index++, row--, diagonal--){
+        if (row >= matrix[i].length || 
+            row < 0 || 
+            diagonal >= matrix[i].length || 
+            diagonal < 0) {
+            break;
+        } else if(matrix[row][diagonal] == 1 ) {
+            outputCoordinates.push([row, diagonal]);
+            counter++;
+
+            if(counter == k){
+                return outputCoordinates;
+            }
+        }else{
+            outputCoordinates = [];
+            counter = 0;
+        }
+    }
+
+    outputCoordinates = [];
+
+    for(let i_index = 0, counter = 0, row = i, diagonal = j; i_index < matrix[i].length; i_index++, row--, diagonal++){
+        if (row >= matrix[i].length || 
+            row < 0 || 
+            diagonal >= matrix[i].length || 
+            diagonal < 0) {
+            break;
+        } else if(matrix[row][diagonal] == 1 ) {
+            outputCoordinates.push([row, diagonal]);
+            counter++;
+
+            if(counter == k){
+                return outputCoordinates;
+            }
+        }else{
+            outputCoordinates = [];
+            counter = 0;
+        }
+    }
+
+    outputCoordinates = [];
+
+    for(let i_index = 0, counter = 0, row = i, diagonal = j; i_index < matrix[i].length; i_index++, row++, diagonal--){
+        if (row >= matrix[i].length || 
+            row < 0 || 
+            diagonal >= matrix[i].length || 
+            diagonal < 0) {
+            break;
+        } else if(matrix[row][diagonal] == 1 ) {
+            outputCoordinates.push([row, diagonal]);
+            counter++;
+
+            if(counter == k){
+                return outputCoordinates;
+            }
+        }else{
+            outputCoordinates = [];
+            counter = 0;
+        }
+    }
+
+    return null;
+}
+
+function checkLine(matrix, i, j, k) {
+    var outputCoordinates = [];
+
+    for (var j_index = 0, counter = 0; j_index < matrix[i].length; j_index++) {
+        if (matrix[i][j_index] == 1) {
+            outputCoordinates.push([i, j_index]);
+            counter++;
+
+            if (counter == k) {
+                return outputCoordinates;
+            }
+        } else {
+            outputCoordinates = [];
+            counter = 0;
+        }
+    }
+
+    outputCoordinates = [];
+
+    for (var i_index = 0, counter = 0; i_index < matrix[j].length; i_index++) {
+        if (matrix[i_index][j] == 1) {
+            outputCoordinates.push([i_index, j]);
+            counter++;
+
+            if (counter == k) {
+                return outputCoordinates;
+            }
+        } else {
+            outputCoordinates = [];
+            counter = 0;
+        }
+    }
+
+    return null;
+}
+
+function checkWinner(matrix, i, j, k,playingField) {
+    let rowCoords = checkLine(matrix,i, j, k);
+    let diagonalCoords = checkDiagonal(matrix,i, j, k);
+    
+    if (rowCoords) {
+        paintOverWinCells(rowCoords, playingField);
+        win = true;
+    }
+
+    if (diagonalCoords) {
+        paintOverWinCells(diagonalCoords, playingField);
+        win = true;
+    }
+}
 
 export function updateСell(event, i, j, fieldOfСrosses, fieldOfZeros, playingField, k) {
-
     if (win === true) {
         return;
     }
-    
+
     let target = event.target;
 
-    if(target.classList.contains('active-cell') || target.classList.contains('image-symbol')){
+    if (target.classList.contains('active-cell') || target.classList.contains('image-symbol')) {
         return;
     }
+
+    target.classList.add('active-cell');
 
     if (moveNumber) {
         target.innerHTML = templateZero;
         fieldOfZeros[i][j] = 1;
+        checkWinner(fieldOfZeros, i, j, k, playingField);
         playerMoveNumber.innerHTML = 'Ходят крестики ❌';
     } else {
         target.innerHTML = templateCross;
         fieldOfСrosses[i][j] = 1;
+        checkWinner(fieldOfСrosses, i, j, k, playingField);
         playerMoveNumber.innerHTML = 'Ходят нолики ⭕';
     }
 
-    target.classList.add('active-cell');
     moveNumber = !moveNumber;
 
-    let fieldOfСrossesTranspone = transposeMatrix(fieldOfСrosses);
-    let fieldOfZerosTranspone = transposeMatrix(fieldOfZeros);
+    // let fieldOfСrossesTranspone = transposeMatrix(fieldOfСrosses);
+    // let fieldOfZerosTranspone = transposeMatrix(fieldOfZeros);
 
-    if (isPaintOverAllWinCells(fieldOfСrosses, fieldOfСrossesTranspone, playingField, k) === true) {
+    // if (isPaintOverAllWinCells(fieldOfСrosses, fieldOfСrossesTranspone, playingField, k) === true) {
 
-        playerMoveNumber.innerHTML = 'Победили крестики!';
-        winCounterForCross++;
-        crossWins.innerHTML = `${winCounterForCross}`;
-        // win = true;
+    //     playerMoveNumber.innerHTML = 'Победили крестики!';
+    //     winCounterForCross++;
+    //     crossWins.innerHTML = `${winCounterForCross}`;
+    //     // win = true;
 
 
-    } else if (isPaintOverAllWinCells(fieldOfZeros, fieldOfZerosTranspone, playingField, k) === true) {
+    // } else if (isPaintOverAllWinCells(fieldOfZeros, fieldOfZerosTranspone, playingField, k) === true) {
 
-        playerMoveNumber.innerHTML = 'Победили нолики!';
-        winCounterForZeros++;
-        zerosWins.innerHTML = `${winCounterForZeros}`;
-        // win = true;
+    //     playerMoveNumber.innerHTML = 'Победили нолики!';
+    //     winCounterForZeros++;
+    //     zerosWins.innerHTML = `${winCounterForZeros}`;
+    //     // win = true;
 
-    } /*else {
-        
-        drawCondition++;
-        
-        if (drawCondition === 9) {
-            playerMoveNumber.innerHTML = 'Ничья!';
-            
-            paintOverAllCells(playingField);
-        }
-    }*/
-    
-    
+    // } /*else {
+
+    //     drawCondition++;
+
+    //     if (drawCondition === 9) {
+    //         playerMoveNumber.innerHTML = 'Ничья!';
+
+    //         paintOverAllCells(playingField);
+    //     }
+    // }*/
+
+
 
 }

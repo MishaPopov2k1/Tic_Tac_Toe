@@ -43,10 +43,9 @@ function makeTabActive(btn) {
     }
 
     if (activeBtn) {
-        resetPlayingField(playingField, gameMenu);
-
         if (btn === activeBtn) {
             activeBtn.classList.remove('active');
+            resetPlayingField(playingField, gameMenu);
             return;
         }
         else {
@@ -92,7 +91,6 @@ function createPlayingField(playingField, n, cell, k, btn) {
 };
 
 playButton3x3.addEventListener('click', (e) => {
-    //  controlActiveBtn(e.target);
     k = 3;
     createPlayingField(playingField, 3, cell, k, e.target);
     makeTabActive(e.target);
