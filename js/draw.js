@@ -1,45 +1,23 @@
 import {
-    win,
-    getIndexesOfTheWinningStrategy,
-    k,
+  win,
+  getIndexesOfTheWinningStrategy,
+  k,
 
 } from './gameLogic';
 
 
-export function drawSymbol(symbol) {
-    symbol.classList.remove('hidden');
-};
-
 export function paintOverWinCells(indexArr, playingField) {
+  const rows = playingField.children;
 
-    let rows = playingField.children;
-
-    for (const coord of indexArr) {
-        let cell = rows[coord[0]].children[coord[1]];
-        cell.classList.add('paint__over-green');
-    }
-
-
+  for (const coord of indexArr) {
+    const cell = rows[coord[0]].children[coord[1]];
+    cell.classList.add('paint__over-green');
+  }
 }
 
 export function paintOverAllCells(playingField) {
-    // playingField.children[0].children[0].style.backgroundColor = 'yellow';
+  // playingField.children[0].children[0].style.backgroundColor = 'yellow';
 
 }
 
-
-export function isPaintOverAllWinCells(arr, arrTransponse, playingField, k) {
-
-    if (getIndexesOfTheWinningStrategy(arr, arrTransponse, k)) {
-
-        paintOverWinCells(getIndexesOfTheWinningStrategy(arr, arrTransponse, k), playingField);
-
-        return win = true;
-
-    } else {
-
-        return false;
-
-    }
-};
 

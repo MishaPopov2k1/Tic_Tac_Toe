@@ -85,6 +85,8 @@ a {
 .cell {
     align-items: center;
     text-align: center;
+    min-width: 100px;
+    min-height: 100px;
     width: 100px;
     height: 100px;
     background: #ecdef0;
