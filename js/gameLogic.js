@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import {
   paintOverWinCells,
 
@@ -73,13 +74,21 @@ export function createMatrix(n) {
   return result;
 };
 
-function checkDiagonalWinner(matrix, x, y, k, updateRowCallback, updateDiagonalCallback) {
+function checkDiagonalWinner(gameCellState, matrix, updateRowCallback, updateDiagonalCallback) {
+  const {
+    coordinates: {
+      line,
+      column,
+    },
+    numberOfSymbolsToWin,
+  } = gameCellState;
+
   let outputCoordinates = [];
 
-  for (let i = 0, counter = 0, row = x, diagonal = y; i < matrix[x].length; i++) {
-    if (row >= matrix[x].length ||
+  for (let i = 0, counter = 0, row = line, diagonal = column; i < matrix[line].length; i++) {
+    if (row >= matrix[line].length ||
             row < 0 ||
-            diagonal >= matrix[x].length ||
+            diagonal >= matrix[line].length ||
             diagonal < 0) {
       return null;
     } else if (matrix[row][diagonal] == 1) {
@@ -88,7 +97,7 @@ function checkDiagonalWinner(matrix, x, y, k, updateRowCallback, updateDiagonalC
       row = updateRowCallback(row);
       diagonal = updateDiagonalCallback(diagonal);
 
-      if (counter == k) {
+      if (counter == numberOfSymbolsToWin) {
         return outputCoordinates;
       }
     } else {
@@ -101,8 +110,8 @@ function checkDiagonalWinner(matrix, x, y, k, updateRowCallback, updateDiagonalC
   return null;
 }
 
-function checkDiagonal(matrix, i, j, k) {
-  const firstCheck = checkDiagonalWinner(matrix, i, j, k, function(row) {
+function checkDiagonal(gameCellState, matrix) {
+  const firstCheck = checkDiagonalWinner(gameCellState, matrix, function(row) {
     return ++row;
   }, function(diagonal) {
     return ++diagonal;
@@ -112,7 +121,7 @@ function checkDiagonal(matrix, i, j, k) {
     return firstCheck;
   }
 
-  const secondCheck = checkDiagonalWinner(matrix, i, j, k, function(row) {
+  const secondCheck = checkDiagonalWinner(gameCellState, matrix, function(row) {
     return --row;
   }, function(diagonal) {
     return --diagonal;
@@ -122,7 +131,7 @@ function checkDiagonal(matrix, i, j, k) {
     return secondCheck;
   }
 
-  const thirdCheck = checkDiagonalWinner(matrix, i, j, k, function(row) {
+  const thirdCheck = checkDiagonalWinner(gameCellState, matrix, function(row) {
     return --row;
   }, function(diagonal) {
     return ++diagonal;
@@ -132,7 +141,7 @@ function checkDiagonal(matrix, i, j, k) {
     return thirdCheck;
   }
 
-  const fourthCheck = checkDiagonalWinner(matrix, i, j, k, function(row) {
+  const fourthCheck = checkDiagonalWinner(gameCellState, matrix, function(row) {
     return ++row;
   }, function(diagonal) {
     return --diagonal;
@@ -144,103 +153,23 @@ function checkDiagonal(matrix, i, j, k) {
 }
 
 
-/* function checkDiagonal(matrix, i, j, k) {
-    let outputCoordinates = [];
+function checkLine(gameCellState, matrix) {
+  const {
+    coordinates: {
+      line,
+      column,
+    },
+    numberOfSymbolsToWin,
+  } = gameCellState;
 
-    for (let i_index = 0, counter = 0, row = i, diagonal = j; i_index < matrix[i].length; i_index++, row++, diagonal++) {
-        if (row >= matrix[i].length ||
-            row < 0 ||
-            diagonal >= matrix[i].length ||
-            diagonal < 0) {
-            break;
-        } else if (matrix[row][diagonal] == 1) {
-            outputCoordinates.push([row, diagonal]);
-            counter++;
-
-            if (counter == k) {
-                return outputCoordinates;
-            }
-        } else {
-            outputCoordinates = [];
-            counter = 0;
-        }
-    }
-
-    outputCoordinates = [];
-
-    for (let i_index = 0, counter = 0, row = i, diagonal = j; i_index < matrix[i].length; i_index++, row--, diagonal--) {
-        if (row >= matrix[i].length ||
-            row < 0 ||
-            diagonal >= matrix[i].length ||
-            diagonal < 0) {
-            break;
-        } else if (matrix[row][diagonal] == 1) {
-            outputCoordinates.push([row, diagonal]);
-            counter++;
-
-            if (counter == k) {
-                return outputCoordinates;
-            }
-        } else {
-            outputCoordinates = [];
-            counter = 0;
-        }
-    }
-
-    outputCoordinates = [];
-
-    for (let i_index = 0, counter = 0, row = i, diagonal = j; i_index < matrix[i].length; i_index++, row--, diagonal++) {
-        if (row >= matrix[i].length ||
-            row < 0 ||
-            diagonal >= matrix[i].length ||
-            diagonal < 0) {
-            break;
-        } else if (matrix[row][diagonal] == 1) {
-            outputCoordinates.push([row, diagonal]);
-            counter++;
-
-            if (counter == k) {
-                return outputCoordinates;
-            }
-        } else {
-            outputCoordinates = [];
-            counter = 0;
-        }
-    }
-
-    outputCoordinates = [];
-
-    for (let i_index = 0, counter = 0, row = i, diagonal = j; i_index < matrix[i].length; i_index++, row++, diagonal--) {
-        if (row >= matrix[i].length ||
-            row < 0 ||
-            diagonal >= matrix[i].length ||
-            diagonal < 0) {
-            break;
-        } else if (matrix[row][diagonal] == 1) {
-            outputCoordinates.push([row, diagonal]);
-            counter++;
-
-            if (counter == k) {
-                return outputCoordinates;
-            }
-        } else {
-            outputCoordinates = [];
-            counter = 0;
-        }
-    }
-
-    return null;
-}*/
-
-function checkLine(matrix, i, j, k) {
   let outputCoordinates = [];
 
-  for (let j_index = 0, counter = 0; j_index < matrix[i].length; j_index++) {
-    if (matrix[i][j_index] == 1) {
-      outputCoordinates.push([i, j_index]);
+  for (let j_index = 0, counter = 0; j_index < matrix[line].length; j_index++) {
+    if (matrix[line][j_index] == 1) {
+      outputCoordinates.push([line, j_index]);
       counter++;
 
-      if (counter == k) {
+      if (counter == numberOfSymbolsToWin) {
         return outputCoordinates;
       }
     } else {
@@ -251,12 +180,12 @@ function checkLine(matrix, i, j, k) {
 
   outputCoordinates = [];
 
-  for (let i_index = 0, counter = 0; i_index < matrix[j].length; i_index++) {
-    if (matrix[i_index][j] == 1) {
-      outputCoordinates.push([i_index, j]);
+  for (let i_index = 0, counter = 0; i_index < matrix[column].length; i_index++) {
+    if (matrix[i_index][column] == 1) {
+      outputCoordinates.push([i_index, column]);
       counter++;
 
-      if (counter == k) {
+      if (counter == numberOfSymbolsToWin) {
         return outputCoordinates;
       }
     } else {
@@ -268,9 +197,13 @@ function checkLine(matrix, i, j, k) {
   return null;
 }
 
-function checkWinner(matrix, i, j, k, playingField) {
-  const rowCoords = checkLine(matrix, i, j, k);
-  const diagonalCoords = checkDiagonal(matrix, i, j, k);
+function checkWinner(gameCellState, matrix) {
+  const {
+    playingField,
+  } = gameCellState;
+
+  const rowCoords = checkLine(gameCellState, matrix);
+  const diagonalCoords = checkDiagonal(gameCellState, matrix);
 
   if (rowCoords) {
     paintOverWinCells(rowCoords, playingField);
@@ -281,51 +214,51 @@ function checkWinner(matrix, i, j, k, playingField) {
     paintOverWinCells(diagonalCoords, playingField);
     return win = true;
   }
+
   return false;
 }
 
-export function updateСell(params) {
+export function updateСell(gameCellState) {
   if (win === true) {
     return;
   }
   const {
     cell,
     coordinates: {
-      lineСoordinate,
-      columnCoordinate,
+      line,
+      column,
     },
     fields: {
-      fieldOfСrosses,
-      fieldOfZeros,
+      crosses,
+      zeros,
     },
-    playingField,
-    numberOfSymbolsToWin,
-  } = params;
+  } = gameCellState;
 
-
-  if (cell.classList.contains('active-cell') || cell.classList.contains('image-symbol')) {
+  if (cell.classList.contains('image-symbol')|| cell.classList.contains('filled')) {
     return;
   }
-
-  cell.classList.add('active-cell');
+  cell.classList.add('filled');
 
   if (moveNumber) {
     cell.innerHTML = templateZero;
-    fieldOfZeros[lineСoordinate][columnCoordinate] = 1;
+    zeros[line][column] = 1;
     playerMoveNumber.innerHTML = 'Ходят крестики ❌';
   } else {
     cell.innerHTML = templateCross;
-    fieldOfСrosses[lineСoordinate][columnCoordinate] = 1;
+    crosses[line][column] = 1;
     playerMoveNumber.innerHTML = 'Ходят нолики ⭕';
   }
 
   moveNumber = !moveNumber;
 
-  if (checkWinner(fieldOfСrosses, lineСoordinate, columnCoordinate, numberOfSymbolsToWin, playingField) === true) {
+  const matrixForCrosses = gameCellState.fields.crosses;
+  const matrixForZeros = gameCellState.fields.zeros;
+
+  if (checkWinner(gameCellState, matrixForCrosses) === true) {
     playerMoveNumber.innerHTML = '❌Победа крестиков!❌';
     winCounterForCross++;
     crossWins.innerHTML = `${winCounterForCross}`;
-  } else if (checkWinner(fieldOfZeros, lineСoordinate, columnCoordinate, numberOfSymbolsToWin, playingField) === true) {
+  } else if (checkWinner(gameCellState, matrixForZeros) === true) {
     playerMoveNumber.innerHTML = '⭕Победа ноликов!⭕';
     winCounterForZeros++;
     zerosWins.innerHTML = `${winCounterForZeros}`;

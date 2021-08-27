@@ -1,15 +1,9 @@
-import {
-  win,
-  getIndexesOfTheWinningStrategy,
-  k,
-
-} from './gameLogic';
 
 
-export function paintOverWinCells(indexArr, playingField) {
+export function paintOverWinCells(indexArray, playingField) {
   const rows = playingField.children;
 
-  for (const coord of indexArr) {
+  for (const coord of indexArray) {
     const cell = rows[coord[0]].children[coord[1]];
     cell.classList.add('paint__over-green');
   }

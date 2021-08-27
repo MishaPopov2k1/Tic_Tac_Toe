@@ -10,6 +10,8 @@ import {
   k,
 } from './gameLogic';
 
+import {getTitle} from './getData.js';
+getTitle();
 
 export const playingField = document.querySelector('.playing__field');
 
@@ -70,29 +72,26 @@ function createPlayingField(playingField, n, cell, k, btn) {
       const td = cell.content.cloneNode(true).firstElementChild;
 
       td.dataset.index = `${i}${j}`;
-      const params = {
+      const gameCellState = {
         cell: event,
         coordinates: {
-          lineСoordinate: i,
-          columnCoordinate: j,
+          line: i,
+          column: j,
         },
         fields: {
-          fieldOfСrosses: fieldOfСrosses,
-          fieldOfZeros: fieldOfZeros,
+          crosses: fieldOfСrosses,
+          zeros: fieldOfZeros,
         },
 
         playingField,
         numberOfSymbolsToWin: k,
       };
 
-      params.coordinates.lineСoordinate = i;
-      params.coordinates.columnCoordinate = j;
-      params.numberOfSymbolsToWin = k;
       tr.appendChild(td);
 
       td.addEventListener('click', (event) => {
-        params.cell = event.target;
-        updateСell(params);
+        gameCellState.cell = event.target;
+        updateСell(gameCellState);
       });
       playingField.appendChild(tr);
     };

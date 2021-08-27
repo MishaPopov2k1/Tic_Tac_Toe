@@ -3,6 +3,6 @@ module.exports = {
   devtool: 'source-map',
   entry: './js/main.js',
   output: {
-    filename: './bundle.js'
-  }
+    filename: './bundle.js',
+  },
 };
