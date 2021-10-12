@@ -1,17 +1,16 @@
 import {
-  resetWinCounter,
-  resetPlayingField,
-  createMatrix,
-  updateСell,
-  resetPlayingMatrix,
-  resetGameCells,
+  checkCellForFullness,
   setGameConditionsFor3x3,
   n,
   k,
+  setGameConditionsForNxN,
 } from './gameLogic';
 
-import {getTitle} from './getData.js';
-getTitle();
+import {sendFieldSizesForStart as sendConditionForStart, resetPlayingMatrix} from '../API/sendGameState';
+import {getTitle} from '../API/getData.js';
+import {openModal} from './modal';
+
+import {resetGameCells, resetWinCounter, resetPlayingField} from './draw';
 
 export const playingField = document.querySelector('.playing__field');
 
@@ -21,15 +20,21 @@ const cell = document.querySelector('#cell');
 
 const playButton3x3 = document.querySelector('.button-play-3x3');
 const playButtonNxN = document.querySelector('.button-play-NxN');
-const buttonPlayAgain = document.querySelector('.button-play-again');
+const playAgainButton = document.querySelector('.button-play-again');
 const restartButton = document.querySelector('.img-restart');
+const playOnlineButton = document.querySelector('.img-play-online');
 
-const conditionForNxN = document.querySelector('.condition-for-NxN');
+export const conditionForNxN = document.querySelector('.condition-for-NxN');
 const goButton = document.querySelector('.btn-go');
 
+const titleElement = document.querySelector('.title__tic-tac-toe');
 
-let fieldOfСrosses = [];
-let fieldOfZeros = [];
+
+// const additionalBtns = document.querySelector('.additional-btn');
+
+getTitle().then((title) => (
+  titleElement.innerHTML = title
+));
 
 /**
  * Функция для работы с табами
@@ -57,14 +62,9 @@ function makeTabActive(btn) {
   } else {
     btn.classList.add('active');
   }
-}
-
+};
 
 function createPlayingField(playingField, n, cell, k, btn) {
-  fieldOfСrosses = createMatrix(n);
-  fieldOfZeros = createMatrix(n);
-
-
   for (let i = 0; i < n; i++) {
     const tr = document.createElement('tr');
 
@@ -72,26 +72,22 @@ function createPlayingField(playingField, n, cell, k, btn) {
       const td = cell.content.cloneNode(true).firstElementChild;
 
       td.dataset.index = `${i}${j}`;
-      const gameCellState = {
-        cell: event,
+
+      const cellСoordinates = {
         coordinates: {
           line: i,
           column: j,
         },
-        fields: {
-          crosses: fieldOfСrosses,
-          zeros: fieldOfZeros,
-        },
-
-        playingField,
-        numberOfSymbolsToWin: k,
       };
+
 
       tr.appendChild(td);
 
       td.addEventListener('click', (event) => {
-        gameCellState.cell = event.target;
-        updateСell(gameCellState);
+        const cell = event.target;
+        /* if ( */checkCellForFullness(cellСoordinates, cell); /* != true) {
+          sendCoordinatesOfMove(cellСoordinates);
+        } */
       });
       playingField.appendChild(tr);
     };
@@ -100,9 +96,11 @@ function createPlayingField(playingField, n, cell, k, btn) {
   };
 }
 
+
 playButton3x3.addEventListener('click', (e) => {
   setGameConditionsFor3x3();
   createPlayingField(playingField, n, cell, k, e.target);
+  sendConditionForStart({n, k});
   makeTabActive(e.target);
   conditionForNxN.classList.add('hidden');
 });
@@ -115,32 +113,50 @@ playButtonNxN.addEventListener('click', (e) => {
 });
 
 goButton.addEventListener('click', () => {
-  const smallElem = document.createElement('small');
-  conditionForNxN.append(smallElem);
-
-  n = + document.querySelector('.input-for-N').value;
-  k = + document.querySelector('.input-for-K').value;
-
-  if (n == 0 || k == 0) {
-    alert('Некорректные данные!');
-    smallElem.style.color = 'red';
-    smallElem.textContent = 'Некорректные данные!';
-    return;
-  }
+  setGameConditionsForNxN();
 
   conditionForNxN.classList.add('hidden');
   playButtonNxN.classList.add('active-game');
 
+  sendConditionForStart({n, k});
   createPlayingField(playingField, n, cell, k, playButtonNxN);
 });
 
 restartButton.addEventListener('click', () => {
   restartButton.classList.toggle('rotate');
+  sendConditionForStart({n, k});
   resetWinCounter();
 });
 
-buttonPlayAgain.addEventListener('click', () => {
-  fieldOfСrosses = resetPlayingMatrix(fieldOfСrosses);
-  fieldOfZeros = resetPlayingMatrix(fieldOfZeros);
+playAgainButton.addEventListener('click', () => {
+  resetPlayingMatrix();
   resetGameCells(playingField);
+});
+
+playOnlineButton.addEventListener('click', (e) => {
+  openModal();
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  const checkbox = document.querySelector('input[type="checkbox"]');
+  const logoImagine = document.querySelector('.logo-img');
+
+
+  checkbox.addEventListener('click', function(e) {
+    if (checkbox.checked) {
+      document.body.classList.add('dark-theme');
+
+      setTimeout( () => {
+        logoImagine.classList.add('dark-theme-for-img');
+        restartButton.classList.add('dark-theme-for-img');
+        playOnlineButton.classList.add('dark-theme-for-img');
+      }, 220);
+    } else {
+      document.body.classList.remove('dark-theme');
+      logoImagine.classList.remove('dark-theme-for-img');
+      restartButton.classList.remove('dark-theme-for-img');
+      playOnlineButton.classList.remove('dark-theme-for-img');
+    }
+  });
 });

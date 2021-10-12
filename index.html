@@ -6,10 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <!-- <script src="js/main.js" defer></script> -->
-    <!-- <script src="js/draw.js" defer></script> -->
-    <!-- <script src="js/gameLogic.js" defer></script> -->
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&display=swap" rel="stylesheet">
+    
     <title>TIC-TAC-Toe</title>
 </head>
 
@@ -41,6 +39,14 @@
                             </li>
                         </ul>
                     </nav>
+                  
+                    <div class="change-theme">
+                        <p class="change-text">Изменить тему</p>
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider round"></span>
+                          </label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -58,8 +64,8 @@
         </template>
 
         <div class="condition-for-NxN hidden">
-            <p class="text-condition dimension">Введите размерность игрового поля (NxN) <input class="input input-for-N" type="text" ></p>
-            <p class="text-condition K ">Введите количество символов для победы K (K ≤ N)<input class="input input-for-K" type="text" ></p>
+            <p class="text-condition dimension">Введите размерность игрового поля (NxN) <input class="input-for-condition input-for-N" type="text" ></p>
+            <p class="text-condition K ">Введите количество символов для победы K (K ≤ N)<input class="input-for-condition input-for-K" type="text" ></p>
             <a class="btn-go button " href="#">Поехали!</a>
         </div>
 
@@ -68,8 +74,8 @@
             <p class="player__move-number">Ходят крестики ❌</p>
 
             <div class="player-icons">
-                <img class="image-symbol cross-img " src="images/cross.png" alt="cross">
-                <img class="image-symbol zero-img " src="images/zero.png" alt="zero">
+                <img class="image-symbol cross-img" src="images/cross.png" alt="cross">
+                <img class="image-symbol zero-img" src="images/zero.png" alt="zero">
             </div>
 
             <div class="game-score">
@@ -81,10 +87,51 @@
                 <a class="button button-play-again">Играть снова</a>
                 <a class="btn-restart">
                     <img class="img-restart" src="images/circular-arrows (1).png" alt="restart">
+                    <div class="explain-text explain-text-reset  ">Обнулить табло</div>
+                </a>
+                <a class="btn-play-online">
+                    <img  class="img-play-online" src="images/online.png" alt="play online">
+                    <div class="explain-text explain-text-online ">Играть онлайн</div>
                 </a>
             </div>
+        
         </section>
     </div>
+    <div class="modal hidden">
+        <div class="overlay"></div>
+        <div class="modal-wrapper">
+          <h2 class="section__title modal__title">
+            Выберите сторону 
+          </h2>
+         
+          <button type="button" class="modal__close" aria-label="закрыть модальное окно">
+          </button>
+          
+            <div class="modal-buttons">
+              <button class="btn-cross modal-btn" href="#">
+                <span id="cross-text"></span>  
+                <img class="img-cross img-symbol" src="./images/cross.png" alt="cross" >
+              </button>
+              <div class="loader">
+                  <!-- <img class="img-cross-loader hidden" src="./images/fan.jpg" alt="cross"> -->
+                  <img class="img-cross-loader hidden" src="./images/cross.png" alt="cross">
+              </div>
+              <button class="btn-zero modal-btn" href="#">
+                <span id="zero-text"></span>
+                <img class="img-zero img-symbol" src="./images/zero.png" alt="zero" >
+              </button>
+            </div>
+            <div class="additional-btn ">
+                <button class="button-accept add-btn">Принять игру</button>
+                <button class="button-cancel add-btn">Отклонить</button>
+            </div>
+            <div class="ready-player1-text ready-player-text"></div>
+            <div class="ready-player2-text ready-player-text"></div>
+          <!-- /.form modal__form -->
+        </div>
+      </div>
+    <script src='state-machine.js'></script>
+    <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
     <script src="dist/bundle.js"></script>
 </body>
 
