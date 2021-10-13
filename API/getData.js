@@ -1,3 +1,5 @@
+export const urlHeroku = 'https://intense-lowlands-28420.herokuapp.com';
+export const urlLocal = 'http://127.0.0.1:3000';
 
 const getStatus = function(response) {
   if (response.status !== 200) {
@@ -10,15 +12,9 @@ const getJson = function(response) {
   return response.json();
 };
 
-export async function sendGameCellState(gameCellState) {
-  await fetch('http://localhost:3000/test')
-      .then(getStatus)
-      .then(getJson)
-      .catch();
-}
 
 export async function getTitle() {
-  const title = await fetch('http://localhost:3000/test')
+  const title = await fetch(urlHeroku+'/test')
       .then(getStatus)
       .then(getJson)
       .catch(function(error) {

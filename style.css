@@ -182,6 +182,7 @@ input:checked + .slider:before {
     max-width: 1000px;
     padding: 0 10px;
     margin: 0 auto;
+    margin-bottom: 100px;
 }
 
 .playing__field {

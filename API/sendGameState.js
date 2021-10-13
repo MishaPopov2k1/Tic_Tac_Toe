@@ -1,13 +1,13 @@
 import {handleGameUpdate, savePlayersId} from '../game-logic/index';
 import {resetGameCells} from '../js/draw';
 import {playingField} from '../js/main';
+import {urlHeroku, urlLocal} from './getData';
 
-export const socket = io('http://127.0.0.1:3000');
+// export const socket = io(urlLocal);
+
+export const socket = io(urlHeroku);
 
 
-/* export function sendGameState(gameCellState) {
-  socket.emit('game cell state', gameCellState);
-} */
 export function sendCoordinatesOfMove(cellCoordinates) {
   socket.emit('game cell state', cellCoordinates);
 }

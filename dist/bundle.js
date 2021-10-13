@@ -10,9 +10,12 @@
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "sendGameCellState": () => (/* binding */ sendGameCellState),
+/* harmony export */   "urlHeroku": () => (/* binding */ urlHeroku),
+/* harmony export */   "urlLocal": () => (/* binding */ urlLocal),
 /* harmony export */   "getTitle": () => (/* binding */ getTitle)
 /* harmony export */ });
+const urlHeroku = 'https://intense-lowlands-28420.herokuapp.com';
+const urlLocal = 'http://127.0.0.1:3000';
 
 const getStatus = function(response) {
   if (response.status !== 200) {
@@ -25,15 +28,9 @@ const getJson = function(response) {
   return response.json();
 };
 
-async function sendGameCellState(gameCellState) {
-  await fetch('http://localhost:3000/test')
-      .then(getStatus)
-      .then(getJson)
-      .catch();
-}
 
 async function getTitle() {
-  const title = await fetch('http://localhost:3000/test')
+  const title = await fetch(urlHeroku+'/test')
       .then(getStatus)
       .then(getJson)
       .catch(function(error) {
@@ -66,16 +63,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _game_logic_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../game-logic/index */ "./game-logic/index.js");
 /* harmony import */ var _js_draw__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../js/draw */ "./js/draw.js");
 /* harmony import */ var _js_main__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../js/main */ "./js/main.js");
+/* harmony import */ var _getData__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./getData */ "./API/getData.js");
 
 
 
 
-const socket = io('http://127.0.0.1:3000');
+
+// export const socket = io(urlLocal);
+
+const socket = io(_getData__WEBPACK_IMPORTED_MODULE_3__.urlHeroku);
 
 
-/* export function sendGameState(gameCellState) {
-  socket.emit('game cell state', gameCellState);
-} */
 function sendCoordinatesOfMove(cellCoordinates) {
   socket.emit('game cell state', cellCoordinates);
 }
@@ -124,6 +122,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _js_main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../js/main */ "./js/main.js");
 /* harmony import */ var _js_draw__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../js/draw */ "./js/draw.js");
+
 
 
 /**

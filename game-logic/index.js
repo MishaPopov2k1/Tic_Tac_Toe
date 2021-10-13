@@ -1,5 +1,6 @@
 import {playingField} from '../js/main';
 import {paintOverWinCells, renderSymbol, showWinner, writeWhoseMove} from '../js/draw';
+
 /**
  *
  * @param {object} data
