@@ -603,7 +603,7 @@ input:checked + .slider:before {
 }
 
 .paint__over-fire{
-    background-image: url('./images/fire3.gif');
+    background-image: url('./images/fire2.gif');
     background-size: cover;
     box-shadow:2px 2px rgb(255, 0, 0), 0em 0 0.6em rgb(219, 9, 9);
 
