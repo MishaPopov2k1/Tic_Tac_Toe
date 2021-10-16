@@ -14,7 +14,7 @@ const getJson = function(response) {
 
 
 export async function getTitle() {
-  const title = await fetch(urlLocal+'/test')
+  const title = await fetch(urlHeroku+'/test')
       .then(getStatus)
       .then(getJson)
       .catch(function(error) {

@@ -5,6 +5,6 @@ const input = document.querySelector('.input');
 const nameBlock = document.querySelector('.name');
 
 
-const userName = prompt('Ваше имя:');
+// const userName = prompt('Ваше имя:');
 nameBlock.innerHTML = `${userName}`;
 
