@@ -1,138 +1,195 @@
 <!DOCTYPE html>
 <html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&display=swap" rel="stylesheet">
-    
     <title>TIC-TAC-Toe</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <header class="header">
-        <div class="container">
-            <div class="header-wrapper">
-                <div class="header-main">
-                    <a class="header__logo" href="#">
-                        <img class="logo-img" src="images/logo.png" alt="logo">
-                    </a>
-                    <p class="title__tic-tac-toe"><b><!-- Tic Tac <span class="color-word">Toe </span>--></b></p>
-                    <nav class="menu">
-                        <ul class="menu-list">
-                            <li class="menu-list__item">
-                                <a class="menu-list__link button-play-3x3" href="#">
-                                    Играть 3x3
-                                </a>
-                            </li>
-                            <li class="menu-list__item">
-                                <a class="menu-list__link button-play-NxN" href="#">
-                                    Играть NxN
-                                </a>
-                            </li>
-                            <li class="menu-list__item">
-                                <a class="menu-list__link" href="#">
-                                    Дизайн поля
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                  
-                    <div class="change-theme">
-                        <p class="change-text">Изменить тему</p>
-                        <label class="switch">
-                            <input type="checkbox">
-                            <span class="slider round"></span>
-                          </label>
-                    </div>
-                </div>
+      <div class="container">
+        <div class="header-wrapper">
+          <div class="header-main">
+            <a class="header__logo" href="#">
+              <img class="logo-img" src="images/logo.png" alt="logo" />
+            </a>
+            <p class="title__tic-tac-toe">
+              <b><!-- Tic Tac <span class="color-word">Toe </span>--></b>
+            </p>
+            <nav class="menu">
+              <ul class="menu-list">
+                <li class="menu-list__item">
+                  <a class="menu-list__link button-play" href="#"> Играть </a>
+                </li>
+                <li class="menu-list__item">
+                  <a class="menu-list__link" href="#"> Дизайн поля </a>
+                </li>
+              </ul>
+            </nav>
+
+            <div class="change-theme">
+              <p class="change-text">Изменить тему</p>
+              <label class="switch">
+                <input type="checkbox" />
+                <span class="slider round"></span>
+              </label>
             </div>
-        </div>
-    </header>
-
-    <div class="playing__field-wrapper">
-        <table class="playing__field">
-
-        </table>
-
-        <template id="cell">
-            <td class="cell " data-index="00">
-
-            </td>
-        </template>
-
-        <div class="condition-for-NxN hidden">
-            <p class="text-condition dimension">Введите размерность игрового поля (NxN) <input class="input-for-condition input-for-N" type="text" ></p>
-            <p class="text-condition K ">Введите количество символов для победы K (K ≤ N)<input class="input-for-condition input-for-K" type="text" ></p>
-            <a class="btn-go button " href="#">Поехали!</a>
-        </div>
-
-        <section class="menu-section hidden ">
-
-            <p class="player__move-number">Ходят крестики ❌</p>
-
-            <div class="player-icons">
-                <img class="image-symbol cross-img" src="images/cross.png" alt="cross">
-                <img class="image-symbol zero-img" src="images/zero.png" alt="zero">
-            </div>
-
-            <div class="game-score">
-                <p class="game-score-for-cross game-score-for-player"> 0 </p>
-                <p class="game-score-for-zeros game-score-for-player"> 0 </p>
-            </div>
-
-            <div class="btn-for-play">
-                <a class="button button-play-again">Играть снова</a>
-                <a class="btn-restart">
-                    <img class="img-restart" src="images/circular-arrows (1).png" alt="restart">
-                    <div class="explain-text explain-text-reset  ">Обнулить табло</div>
-                </a>
-                <a class="btn-play-online">
-                    <img  class="img-play-online" src="images/online.png" alt="play online">
-                    <div class="explain-text explain-text-online ">Играть онлайн</div>
-                </a>
-            </div>
-        
-        </section>
-    </div>
-    <div class="modal hidden">
-        <div class="overlay"></div>
-        <div class="modal-wrapper">
-          <h2 class="section__title modal__title">
-            Выберите сторону 
-          </h2>
-         
-          <button type="button" class="modal__close" aria-label="закрыть модальное окно">
-          </button>
-          
-            <div class="modal-buttons">
-              <button class="btn-cross modal-btn" href="#">
-                <span id="cross-text"></span>  
-                <img class="img-cross img-symbol" src="./images/cross.png" alt="cross" >
-              </button>
-              <div class="loader">
-                  <!-- <img class="img-cross-loader hidden" src="./images/fan.jpg" alt="cross"> -->
-                  <img class="img-cross-loader hidden" src="./images/cross.png" alt="cross">
-              </div>
-              <button class="btn-zero modal-btn" href="#">
-                <span id="zero-text"></span>
-                <img class="img-zero img-symbol" src="./images/zero.png" alt="zero" >
-              </button>
-            </div>
-            <div class="additional-btn ">
-                <button class="button-accept add-btn">Принять игру</button>
-                <button class="button-cancel add-btn">Отклонить</button>
-            </div>
-            <div class="ready-player1-text ready-player-text"></div>
-            <div class="ready-player2-text ready-player-text"></div>
-          <!-- /.form modal__form -->
+          </div>
         </div>
       </div>
-    <script src='state-machine.js'></script>
-    <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
-    <script src="dist/bundle.js"></script>
-</body>
+    </header>
+    <div class="game-wrapper">
+      <div class="whose-move-text hidden">
+        <b class="player__move-number">Ходят крестики ❌</b>
+      </div>
+      <div class="playing__field-wrapper hidden">
+        <div class="player-icons">
+          <img
+            class="image-symbol cross-img"
+            src="images/cross.png"
+            alt="cross"
+          />
+          <h4 class="game-score-for-cross game-score-for-player">0</h4>
+        </div>
+        <div class="playing__field-with-setting">
+          <table class="playing__field"></table>
 
+          <div class="btn-for-play">
+            <a class="button button-play-again">Играть снова</a>
+            <a class="btn-restart">
+              <img
+                class="img-restart"
+                src="images/circular-arrows (1).png"
+                alt="restart"
+              />
+              <div class="explain-text explain-text-reset">Обнулить табло</div>
+            </a>
+            <a class="btn-setting-field">
+              <img class="img-setting" src="images/setting.png" alt="setting" />
+              <div class="explain-text explain-text-setting">
+                Настройка поля
+              </div>
+            </a>
+            <a class="btn-play-online">
+              <img
+                class="img-play-online"
+                src="images/online.png"
+                alt="play online"
+              />
+              <div class="explain-text explain-text-online">Играть онлайн</div>
+            </a>
+          </div>
+          <div class="chat-wrapper">
+            <ul class="messages">
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
+            <form class="form">
+              <div class="name"></div>
+              <input type="text" class="input" autocomplete="off" />
+              <button class="btn">Отправить</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="player-icons">
+          <img class="image-symbol zero-img" src="images/zero.png" alt="zero" />
+          <h4 class="game-score-for-zeros game-score-for-player">0</h4>
+        </div>
+
+        <template id="cell">
+          <td class="cell" data-index="00"></td>
+        </template>
+      </div>
+    </div>
+
+    <div class="modal-setting-field hidden">
+      <div class="overlay"></div>
+      <div class="modal-wrapper">
+        <h2 class="section__title modal__title-for-setting">
+          Настройки игрового поля
+        </h2>
+
+        <button
+          type="button"
+          class="modal__close"
+          aria-label="закрыть модальное окно"
+        ></button>
+        <div class="condition-for-NxN">
+          <p class="text-condition dimension">
+            Введите размерность игрового поля
+            <input class="input-for-condition input-for-N" type="text" />
+          </p>
+          <p class="text-condition K">
+            Введите количество символов для победы
+            <input class="input-for-condition input-for-K" type="text" />
+          </p>
+          <a class="btn-go button" href="#">Поехали!</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal hidden">
+      <div class="overlay"></div>
+      <div class="modal-wrapper">
+        <h2 class="section__title modal__title">Выберите сторону</h2>
+
+        <button
+          type="button"
+          class="modal__close"
+          aria-label="закрыть модальное окно"
+        ></button>
+
+        <div class="modal-buttons">
+          <button class="btn-cross modal-btn" href="#">
+            <span id="cross-text"></span>
+            <img
+              class="img-cross img-symbol"
+              src="./images/cross.png"
+              alt="cross"
+            />
+          </button>
+          <div class="loader">
+            <!-- <img class="img-cross-loader hidden" src="./images/fan.jpg" alt="cross"> -->
+            <img
+              class="img-cross-loader hidden"
+              src="./images/circle-loader.png"
+              alt="cross"
+            />
+          </div>
+          <button class="btn-zero modal-btn" href="#">
+            <span id="zero-text"></span>
+            <img
+              class="img-zero img-symbol"
+              src="./images/zero.png"
+              alt="zero"
+            />
+          </button>
+        </div>
+        <div class="additional-btn">
+          <button class="button-accept add-btn">Принять игру</button>
+          <button class="button-cancel add-btn">Отклонить</button>
+        </div>
+        <div class="ready-player1-text ready-player-text"></div>
+        <div class="ready-player2-text ready-player-text"></div>
+        <!-- /.form modal__form -->
+      </div>
+    </div>
+    <script src="state-machine.js"></script>
+    <script
+      src="https://cdn.socket.io/4.1.2/socket.io.min.js"
+      integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg"
+      crossorigin="anonymous"
+    ></script>
+    <script src="dist/bundle.js"></script>
+  </body>
 </html>

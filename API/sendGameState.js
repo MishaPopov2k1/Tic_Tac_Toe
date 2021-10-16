@@ -3,17 +3,21 @@ import {resetGameCells} from '../js/draw';
 import {playingField} from '../js/main';
 import {urlHeroku, urlLocal} from './getData';
 
-// export const socket = io(urlLocal);
+export const socket = io(urlLocal);
 
-export const socket = io(urlHeroku);
+// export const socket = io(urlHeroku);
 
 
 export function sendCoordinatesOfMove(cellCoordinates) {
   socket.emit('game cell state', cellCoordinates);
 }
 
-export function sendFieldSizesForStart({n, k}) {
-  socket.emit('start game', {n, k});
+export function sendFieldSizesForStart(data) {
+/*   const {
+    sizeOfField,
+    numberSymbolsToWin,
+  } = data; */
+  socket.emit('start game', data);
 }
 
 export function resetPlayingMatrix() {

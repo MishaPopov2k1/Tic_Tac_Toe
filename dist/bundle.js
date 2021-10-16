@@ -30,7 +30,7 @@ const getJson = function(response) {
 
 
 async function getTitle() {
-  const title = await fetch(urlHeroku+'/test')
+  const title = await fetch(urlLocal+'/test')
       .then(getStatus)
       .then(getJson)
       .catch(function(error) {
@@ -69,17 +69,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// export const socket = io(urlLocal);
+const socket = io(_getData__WEBPACK_IMPORTED_MODULE_3__.urlLocal);
 
-const socket = io(_getData__WEBPACK_IMPORTED_MODULE_3__.urlHeroku);
+// export const socket = io(urlHeroku);
 
 
 function sendCoordinatesOfMove(cellCoordinates) {
   socket.emit('game cell state', cellCoordinates);
 }
 
-function sendFieldSizesForStart({n, k}) {
-  socket.emit('start game', {n, k});
+function sendFieldSizesForStart(data) {
+/*   const {
+    sizeOfField,
+    numberSymbolsToWin,
+  } = data; */
+  socket.emit('start game', data);
 }
 
 function resetPlayingMatrix() {
@@ -161,6 +165,28 @@ function savePlayersId(data) {
 
 /***/ }),
 
+/***/ "./js/chat.js":
+/*!********************!*\
+  !*** ./js/chat.js ***!
+  \********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _API_sendGameState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../API/sendGameState */ "./API/sendGameState.js");
+
+const messages = document.querySelector('.messages');
+const form = document.querySelector('.form');
+const input = document.querySelector('.input');
+const nameBlock = document.querySelector('.name');
+
+
+const userName = prompt('Ваше имя:');
+nameBlock.innerHTML = `${userName}`;
+
+
+
+/***/ }),
+
 /***/ "./js/draw.js":
 /*!********************!*\
   !*** ./js/draw.js ***!
@@ -216,7 +242,7 @@ function renderSymbol(gameCellState, playingField) {
   const zeroId = localStorage.getItem('zeroId');
   console.log('zeroId : ', zeroId );
   console.log('crossId: ', crossId);
-  
+
   if (state === 'moveCrossPlayer' || state === 'victoryCross') {
     playingField.children[line].children[column].innerHTML = templateCross;
   } else if (state === 'moveZeroPlayer' || state === 'victoryZero') {
@@ -266,71 +292,11 @@ const resetWinCounter = () => {
   crossWins.innerHTML = '0';
 };
 
-function resetPlayingField(playingField, gameMenu) {
+function resetPlayingField() {
+  const playingField = document.querySelector('.playing__field');
   playingField.innerHTML = '';
-  gameMenu.classList.add('hidden');
 };
 
-
-
-
-/***/ }),
-
-/***/ "./js/gameLogic.js":
-/*!*************************!*\
-  !*** ./js/gameLogic.js ***!
-  \*************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "n": () => (/* binding */ n),
-/* harmony export */   "k": () => (/* binding */ k),
-/* harmony export */   "setGameConditionsFor3x3": () => (/* binding */ setGameConditionsFor3x3),
-/* harmony export */   "setGameConditionsForNxN": () => (/* binding */ setGameConditionsForNxN),
-/* harmony export */   "checkCellForFullness": () => (/* binding */ checkCellForFullness)
-/* harmony export */ });
-/* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./main */ "./js/main.js");
-/* harmony import */ var _API_sendGameState__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../API/sendGameState */ "./API/sendGameState.js");
-/* eslint-disable camelcase */
-
-
-
-let n;
-let k;
-
-const setGameConditionsFor3x3 = () => {
-  n = 3;
-  k = 3;
-};
-
-const setGameConditionsForNxN = () =>{
-  const smallElem = document.createElement('small');
-  _main__WEBPACK_IMPORTED_MODULE_0__.conditionForNxN.append(smallElem);
-
-  n = + document.querySelector('.input-for-N').value;
-  k = + document.querySelector('.input-for-K').value;
-
-  if (n == 0 || k == 0) {
-    // alert('Некорректные данные!');
-    smallElem.style.color = 'red';
-    smallElem.textContent = 'Некорректные данные!';
-    return;
-  }
-};
-
-
-function checkCellForFullness(cellСoordinates, cell) {
-  if (cell.classList.contains('image-symbol')/* || cell.classList.contains('filled') */) {
-    return;
-  }
-  // cell.classList.add('filled');
-  // return false;
-
-  // обработка логики игры
-  (0,_API_sendGameState__WEBPACK_IMPORTED_MODULE_1__.sendCoordinatesOfMove)(cellСoordinates);
-  // sendGameState(gameCellState);
-};
 
 
 
@@ -345,13 +311,18 @@ function checkCellForFullness(cellСoordinates, cell) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "playingField": () => (/* binding */ playingField),
-/* harmony export */   "conditionForNxN": () => (/* binding */ conditionForNxN)
+/* harmony export */   "cell": () => (/* binding */ cell),
+/* harmony export */   "conditionForNxN": () => (/* binding */ conditionForNxN),
+/* harmony export */   "createPlayingField": () => (/* binding */ createPlayingField)
 /* harmony export */ });
-/* harmony import */ var _gameLogic__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./gameLogic */ "./js/gameLogic.js");
+/* harmony import */ var _settingField__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./settingField */ "./js/settingField.js");
 /* harmony import */ var _API_sendGameState__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../API/sendGameState */ "./API/sendGameState.js");
 /* harmony import */ var _API_getData_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../API/getData.js */ "./API/getData.js");
 /* harmony import */ var _modal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modal */ "./js/modal.js");
-/* harmony import */ var _draw__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./draw */ "./js/draw.js");
+/* harmony import */ var _chat__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./chat */ "./js/chat.js");
+/* harmony import */ var _draw__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./draw */ "./js/draw.js");
+
+
 
 
 
@@ -362,18 +333,19 @@ __webpack_require__.r(__webpack_exports__);
 
 const playingField = document.querySelector('.playing__field');
 
-const gameMenu = document.querySelector('.menu-section');
-
+const gameMenu = document.querySelector('.playing__field-wrapper');
+const whoseMove = document.querySelector('.whose-move-text');
 const cell = document.querySelector('#cell');
 
-const playButton3x3 = document.querySelector('.button-play-3x3');
-const playButtonNxN = document.querySelector('.button-play-NxN');
+const playButton = document.querySelector('.button-play');
+// const playButtonNxN = document.querySelector('.button-play-NxN');
 const playAgainButton = document.querySelector('.button-play-again');
 const restartButton = document.querySelector('.img-restart');
 const playOnlineButton = document.querySelector('.img-play-online');
 
 const conditionForNxN = document.querySelector('.condition-for-NxN');
 const goButton = document.querySelector('.btn-go');
+
 
 const titleElement = document.querySelector('.title__tic-tac-toe');
 
@@ -401,7 +373,7 @@ function makeTabActive(btn) {
   if (activeBtn) {
     if (btn === activeBtn) {
       activeBtn.classList.remove('active');
-      (0,_draw__WEBPACK_IMPORTED_MODULE_4__.resetPlayingField)(playingField, gameMenu);
+      (0,_draw__WEBPACK_IMPORTED_MODULE_5__.resetPlayingField)(playingField, gameMenu, whoseMove);
       return;
     } else {
       activeBtn.classList.remove('active');
@@ -412,7 +384,7 @@ function makeTabActive(btn) {
   }
 };
 
-function createPlayingField(playingField, n, cell, k, btn) {
+function createPlayingField(playingField, n, cell, k) {
   for (let i = 0; i < n; i++) {
     const tr = document.createElement('tr');
 
@@ -433,7 +405,7 @@ function createPlayingField(playingField, n, cell, k, btn) {
 
       td.addEventListener('click', (event) => {
         const cell = event.target;
-        /* if ( */(0,_gameLogic__WEBPACK_IMPORTED_MODULE_0__.checkCellForFullness)(cellСoordinates, cell); /* != true) {
+        /* if ( */(0,_settingField__WEBPACK_IMPORTED_MODULE_0__.checkCellForFullness)(cellСoordinates, cell); /* != true) {
           sendCoordinatesOfMove(cellСoordinates);
         } */
       });
@@ -441,44 +413,54 @@ function createPlayingField(playingField, n, cell, k, btn) {
     };
 
     gameMenu.classList.remove('hidden');
+    whoseMove.classList.remove('hidden');
   };
 }
 
 
-playButton3x3.addEventListener('click', (e) => {
-  (0,_gameLogic__WEBPACK_IMPORTED_MODULE_0__.setGameConditionsFor3x3)();
-  createPlayingField(playingField, _gameLogic__WEBPACK_IMPORTED_MODULE_0__.n, cell, _gameLogic__WEBPACK_IMPORTED_MODULE_0__.k, e.target);
-  (0,_API_sendGameState__WEBPACK_IMPORTED_MODULE_1__.sendFieldSizesForStart)({n: _gameLogic__WEBPACK_IMPORTED_MODULE_0__.n, k: _gameLogic__WEBPACK_IMPORTED_MODULE_0__.k});
-  makeTabActive(e.target);
-  conditionForNxN.classList.add('hidden');
+playButton.addEventListener('click', (e) => {
+  if (e.target.classList.contains('active')) {
+    (0,_draw__WEBPACK_IMPORTED_MODULE_5__.resetPlayingField)();
+    gameMenu.classList.add('hidden');
+    whoseMove.classList.add('hidden');
+    e.target.classList.remove('active');
+  } else {
+    (0,_settingField__WEBPACK_IMPORTED_MODULE_0__.setGameConditionsFor3x3)();
+    createPlayingField(playingField, _settingField__WEBPACK_IMPORTED_MODULE_0__.n, cell, _settingField__WEBPACK_IMPORTED_MODULE_0__.k);
+    (0,_API_sendGameState__WEBPACK_IMPORTED_MODULE_1__.sendFieldSizesForStart)({n: _settingField__WEBPACK_IMPORTED_MODULE_0__.n, k: _settingField__WEBPACK_IMPORTED_MODULE_0__.k});
+    makeTabActive(e.target);
+  }
+  // getName();
 });
 
 
-playButtonNxN.addEventListener('click', (e) => {
-  (0,_draw__WEBPACK_IMPORTED_MODULE_4__.resetPlayingField)(playingField, gameMenu);
+/* playButtonNxN.addEventListener('click', (e) => {
+  resetPlayingField(playingField, gameMenu);
   makeTabActive(e.target);
   conditionForNxN.classList.toggle('hidden');
-});
+}); */
 
 goButton.addEventListener('click', () => {
-  (0,_gameLogic__WEBPACK_IMPORTED_MODULE_0__.setGameConditionsForNxN)();
+  if ((0,_settingField__WEBPACK_IMPORTED_MODULE_0__.setGameConditionsForNxN)() === true) {
+    (0,_draw__WEBPACK_IMPORTED_MODULE_5__.resetPlayingField)();
+    createPlayingField(playingField, _settingField__WEBPACK_IMPORTED_MODULE_0__.n, cell, _settingField__WEBPACK_IMPORTED_MODULE_0__.k);
+    (0,_settingField__WEBPACK_IMPORTED_MODULE_0__.closeSettingModal)();
+    (0,_API_sendGameState__WEBPACK_IMPORTED_MODULE_1__.sendFieldSizesForStart)({n: _settingField__WEBPACK_IMPORTED_MODULE_0__.n, k: _settingField__WEBPACK_IMPORTED_MODULE_0__.k});
+  }
 
-  conditionForNxN.classList.add('hidden');
-  playButtonNxN.classList.add('active-game');
-
-  (0,_API_sendGameState__WEBPACK_IMPORTED_MODULE_1__.sendFieldSizesForStart)({n: _gameLogic__WEBPACK_IMPORTED_MODULE_0__.n, k: _gameLogic__WEBPACK_IMPORTED_MODULE_0__.k});
-  createPlayingField(playingField, _gameLogic__WEBPACK_IMPORTED_MODULE_0__.n, cell, _gameLogic__WEBPACK_IMPORTED_MODULE_0__.k, playButtonNxN);
+  // conditionForNxN.classList.add('hidden');
+  // playButtonNxN.classList.add('active-game');
 });
 
 restartButton.addEventListener('click', () => {
   restartButton.classList.toggle('rotate');
-  (0,_API_sendGameState__WEBPACK_IMPORTED_MODULE_1__.sendFieldSizesForStart)({n: _gameLogic__WEBPACK_IMPORTED_MODULE_0__.n, k: _gameLogic__WEBPACK_IMPORTED_MODULE_0__.k});
-  (0,_draw__WEBPACK_IMPORTED_MODULE_4__.resetWinCounter)();
+  (0,_API_sendGameState__WEBPACK_IMPORTED_MODULE_1__.sendFieldSizesForStart)({n: _settingField__WEBPACK_IMPORTED_MODULE_0__.n, k: _settingField__WEBPACK_IMPORTED_MODULE_0__.k});
+  (0,_draw__WEBPACK_IMPORTED_MODULE_5__.resetWinCounter)();
 });
 
 playAgainButton.addEventListener('click', () => {
   (0,_API_sendGameState__WEBPACK_IMPORTED_MODULE_1__.resetPlayingMatrix)();
-  (0,_draw__WEBPACK_IMPORTED_MODULE_4__.resetGameCells)(playingField);
+  (0,_draw__WEBPACK_IMPORTED_MODULE_5__.resetGameCells)(playingField);
 });
 
 playOnlineButton.addEventListener('click', (e) => {
@@ -499,12 +481,14 @@ document.addEventListener('DOMContentLoaded', function() {
         logoImagine.classList.add('dark-theme-for-img');
         restartButton.classList.add('dark-theme-for-img');
         playOnlineButton.classList.add('dark-theme-for-img');
+        _settingField__WEBPACK_IMPORTED_MODULE_0__.buttonSettingField.classList.add('dark-theme-for-img');
       }, 220);
     } else {
       document.body.classList.remove('dark-theme');
       logoImagine.classList.remove('dark-theme-for-img');
       restartButton.classList.remove('dark-theme-for-img');
       playOnlineButton.classList.remove('dark-theme-for-img');
+      _settingField__WEBPACK_IMPORTED_MODULE_0__.buttonSettingField.classList.remove('dark-theme-for-img');
     }
   });
 });
@@ -525,7 +509,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _API_sendGameState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../API/sendGameState */ "./API/sendGameState.js");
 // import {io} from 'socket.io-client';
+// import {io} from 'socket.io-client';
 
+// import {playingField, cell, createPlayingField} from './main';
 
 const modalELem = document.querySelector('.modal');
 
@@ -596,6 +582,7 @@ _API_sendGameState__WEBPACK_IMPORTED_MODULE_0__.socket.on('waiting opponent', (d
   // для клиента2
   openModal(true, data);
   showLoader();
+  // changeTitle(titles.confirm);
   isAgreementGame = true;
   setActiveButton({lockedSideClass: `btn-${data}`});
   const agreeGame = modalELem.querySelector('.button-accept');
@@ -606,6 +593,14 @@ _API_sendGameState__WEBPACK_IMPORTED_MODULE_0__.socket.on('waiting opponent', (d
       (0,_API_sendGameState__WEBPACK_IMPORTED_MODULE_0__.sendChoosingSide)('cross');
     }
     (0,_API_sendGameState__WEBPACK_IMPORTED_MODULE_0__.sendReadyTwoPlayers)('ready');
+    // строить поле на данных первого клиента
+    /*     socket.on('start game', (data) => {
+      const {
+        n,
+        k,
+      } = data;
+      createPlayingField(playingField, n, cell, k);
+    }); */
   });
 });
 
@@ -643,6 +638,92 @@ function chooseSides(sideName) {
 playForCrosses.addEventListener('click', (e) => chooseSides('cross') );
 
 playForZeroes.addEventListener('click', (e) => chooseSides('zero') );
+
+
+/***/ }),
+
+/***/ "./js/settingField.js":
+/*!****************************!*\
+  !*** ./js/settingField.js ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "buttonSettingField": () => (/* binding */ buttonSettingField),
+/* harmony export */   "modalSettingField": () => (/* binding */ modalSettingField),
+/* harmony export */   "closeSettingModal": () => (/* binding */ closeSettingModal),
+/* harmony export */   "n": () => (/* binding */ n),
+/* harmony export */   "k": () => (/* binding */ k),
+/* harmony export */   "setGameConditionsFor3x3": () => (/* binding */ setGameConditionsFor3x3),
+/* harmony export */   "setGameConditionsForNxN": () => (/* binding */ setGameConditionsForNxN),
+/* harmony export */   "checkCellForFullness": () => (/* binding */ checkCellForFullness)
+/* harmony export */ });
+/* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./main */ "./js/main.js");
+/* harmony import */ var _API_sendGameState__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../API/sendGameState */ "./API/sendGameState.js");
+const buttonSettingField = document.querySelector('.img-setting');
+const modalSettingField = document.querySelector('.modal-setting-field');
+
+const openModalForSetting = () => {
+  modalSettingField.classList.remove('hidden');
+};
+const closeSettingModal = () => {
+  modalSettingField.classList.add('hidden');
+};
+
+buttonSettingField.addEventListener('click', () => {
+  openModalForSetting();
+});
+
+modalSettingField.addEventListener('click', (event) => {
+  const target = event.target;
+
+  if (target.classList.contains('overlay') ||
+        target.classList.contains('modal__close') ||
+        target.classList.contains('.btn-go')) {
+    closeSettingModal();
+  }
+} );
+
+
+
+
+let n;
+let k;
+
+const setGameConditionsFor3x3 = () => {
+  n = 3;
+  k = 3;
+};
+
+const setGameConditionsForNxN = () =>{
+  const smallElem = document.createElement('small');
+  _main__WEBPACK_IMPORTED_MODULE_0__.conditionForNxN.append(smallElem);
+
+  n = + document.querySelector('.input-for-N').value;
+  k = + document.querySelector('.input-for-K').value;
+
+  if ((n == 0 && k == 0)||n <= k) {
+    // alert('Некорректные данные!');
+    smallElem.style.color = 'red';
+    smallElem.textContent = 'Некорректные данные!';
+    return false;
+  }
+  return true;
+};
+
+
+function checkCellForFullness(cellСoordinates, cell) {
+  if (cell.classList.contains('image-symbol')/* || cell.classList.contains('filled') */) {
+    return;
+  }
+  // cell.classList.add('filled');
+  // return false;
+
+  // обработка логики игры
+  (0,_API_sendGameState__WEBPACK_IMPORTED_MODULE_1__.sendCoordinatesOfMove)(cellСoordinates);
+};
+
 
 
 /***/ })

@@ -4,28 +4,33 @@ import {
   n,
   k,
   setGameConditionsForNxN,
-} from './gameLogic';
+  closeSettingModal,
+  buttonSettingField,
+} from './settingField';
 
 import {sendFieldSizesForStart as sendConditionForStart, resetPlayingMatrix} from '../API/sendGameState';
 import {getTitle} from '../API/getData.js';
 import {openModal} from './modal';
 
+import {getName} from './chat';
+
 import {resetGameCells, resetWinCounter, resetPlayingField} from './draw';
 
 export const playingField = document.querySelector('.playing__field');
 
-const gameMenu = document.querySelector('.menu-section');
+const gameMenu = document.querySelector('.playing__field-wrapper');
+const whoseMove = document.querySelector('.whose-move-text');
+export const cell = document.querySelector('#cell');
 
-const cell = document.querySelector('#cell');
-
-const playButton3x3 = document.querySelector('.button-play-3x3');
-const playButtonNxN = document.querySelector('.button-play-NxN');
+const playButton = document.querySelector('.button-play');
+// const playButtonNxN = document.querySelector('.button-play-NxN');
 const playAgainButton = document.querySelector('.button-play-again');
 const restartButton = document.querySelector('.img-restart');
 const playOnlineButton = document.querySelector('.img-play-online');
 
 export const conditionForNxN = document.querySelector('.condition-for-NxN');
 const goButton = document.querySelector('.btn-go');
+
 
 const titleElement = document.querySelector('.title__tic-tac-toe');
 
@@ -53,7 +58,7 @@ function makeTabActive(btn) {
   if (activeBtn) {
     if (btn === activeBtn) {
       activeBtn.classList.remove('active');
-      resetPlayingField(playingField, gameMenu);
+      resetPlayingField(playingField, gameMenu, whoseMove);
       return;
     } else {
       activeBtn.classList.remove('active');
@@ -64,7 +69,7 @@ function makeTabActive(btn) {
   }
 };
 
-function createPlayingField(playingField, n, cell, k, btn) {
+export function createPlayingField(playingField, n, cell, k) {
   for (let i = 0; i < n; i++) {
     const tr = document.createElement('tr');
 
@@ -93,33 +98,43 @@ function createPlayingField(playingField, n, cell, k, btn) {
     };
 
     gameMenu.classList.remove('hidden');
+    whoseMove.classList.remove('hidden');
   };
 }
 
 
-playButton3x3.addEventListener('click', (e) => {
-  setGameConditionsFor3x3();
-  createPlayingField(playingField, n, cell, k, e.target);
-  sendConditionForStart({n, k});
-  makeTabActive(e.target);
-  conditionForNxN.classList.add('hidden');
+playButton.addEventListener('click', (e) => {
+  if (e.target.classList.contains('active')) {
+    resetPlayingField();
+    gameMenu.classList.add('hidden');
+    whoseMove.classList.add('hidden');
+    e.target.classList.remove('active');
+  } else {
+    setGameConditionsFor3x3();
+    createPlayingField(playingField, n, cell, k);
+    sendConditionForStart({n, k});
+    makeTabActive(e.target);
+  }
+  // getName();
 });
 
 
-playButtonNxN.addEventListener('click', (e) => {
+/* playButtonNxN.addEventListener('click', (e) => {
   resetPlayingField(playingField, gameMenu);
   makeTabActive(e.target);
   conditionForNxN.classList.toggle('hidden');
-});
+}); */
 
 goButton.addEventListener('click', () => {
-  setGameConditionsForNxN();
+  if (setGameConditionsForNxN() === true) {
+    resetPlayingField();
+    createPlayingField(playingField, n, cell, k);
+    closeSettingModal();
+    sendConditionForStart({n, k});
+  }
 
-  conditionForNxN.classList.add('hidden');
-  playButtonNxN.classList.add('active-game');
-
-  sendConditionForStart({n, k});
-  createPlayingField(playingField, n, cell, k, playButtonNxN);
+  // conditionForNxN.classList.add('hidden');
+  // playButtonNxN.classList.add('active-game');
 });
 
 restartButton.addEventListener('click', () => {
@@ -151,12 +166,14 @@ document.addEventListener('DOMContentLoaded', function() {
         logoImagine.classList.add('dark-theme-for-img');
         restartButton.classList.add('dark-theme-for-img');
         playOnlineButton.classList.add('dark-theme-for-img');
+        buttonSettingField.classList.add('dark-theme-for-img');
       }, 220);
     } else {
       document.body.classList.remove('dark-theme');
       logoImagine.classList.remove('dark-theme-for-img');
       restartButton.classList.remove('dark-theme-for-img');
       playOnlineButton.classList.remove('dark-theme-for-img');
+      buttonSettingField.classList.remove('dark-theme-for-img');
     }
   });
 });

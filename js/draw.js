@@ -35,7 +35,7 @@ export function renderSymbol(gameCellState, playingField) {
   const zeroId = localStorage.getItem('zeroId');
   console.log('zeroId : ', zeroId );
   console.log('crossId: ', crossId);
-  
+
   if (state === 'moveCrossPlayer' || state === 'victoryCross') {
     playingField.children[line].children[column].innerHTML = templateCross;
   } else if (state === 'moveZeroPlayer' || state === 'victoryZero') {
@@ -85,9 +85,9 @@ export const resetWinCounter = () => {
   crossWins.innerHTML = '0';
 };
 
-export function resetPlayingField(playingField, gameMenu) {
+export function resetPlayingField() {
+  const playingField = document.querySelector('.playing__field');
   playingField.innerHTML = '';
-  gameMenu.classList.add('hidden');
 };
 
 

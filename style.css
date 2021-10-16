@@ -2,14 +2,16 @@
 *::after,
 *::before {
     box-sizing: border-box;
+    font-family: 'Oswald', sans-serif;
 }
 
 body{
-    font-family: 'Oswald', sans-serif;
+    /* font-family: 'Oswald', sans-serif; */
     font-size: 18px;
     line-height: 27px;
     font-weight: 300;
-    background: aliceblue;
+    /* background: aliceblue; */
+    /* background: #C9EBF2; */
 }
 
 a {
@@ -183,11 +185,7 @@ input:checked + .slider:before {
     padding: 0 10px;
     margin: 0 auto;
     margin-bottom: 100px;
-}
-
-.playing__field {
-    margin-top: 75px;
-    margin-left: 75px;
+    justify-content: space-around;
 }
 
 
@@ -199,16 +197,19 @@ input:checked + .slider:before {
     width: 100px;
     height: 100px;
     background: #e4e0fc;
+    /* background-image: url('./images/circle-bg.png'); */
+    /* background-size: cover; */
     box-shadow:2px 2px rgb(165, 94, 231), 0em 0 0.6em rgb(123, 0, 206);
     border-radius: 5px;
 }
 
 .image-symbol {
     width: 92px;
-    height: auto;
+    height: 92px;
 }
 
 .condition-for-NxN {
+    color: #fff;
     display: block;
     align-items: center;
     
@@ -239,27 +240,27 @@ input:checked + .slider:before {
     display: none !important;
 }
 
-.menu-section {
+.whose-move-text {
     position: relative;
-    width: 300px;
     height: auto;
     margin-top: 30px;
     padding: 15px;
     justify-content: space-between;
     text-align: center; 
     margin-left: 50px;
+    margin: 0 auto;
+    margin-bottom: 15px;
 }
 
 .player__move-number {
-    font-size: 24px;
+    font-size: 28px;
     margin: 0;
-    margin-bottom: 25px;
-    margin-right: 25px;
 
 }
 
 .player-icons {
-    display: flex;
+    padding: 15px;
+    height: fit-content;
     justify-content: space-between;
 }
 
@@ -284,25 +285,21 @@ input:checked + .slider:before {
 }
 
 .game-score-for-player {
+    font-size: 30px;
+    text-align: center;
     padding: 15px;
     border-radius: 35px;
     box-shadow:2px 2px rgb(165, 94, 231), 0em 0 3.4em blueviolet;
 }
 
-.game-score-for-cross {
-    margin-left: 25px;
-}
-
-.game-score-for-zeros {
-    margin-right: 25px;
-}
 
 .btn-for-play {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 25px;
-    margin-right: 5px;
+    margin: 25px auto;
+    max-width: 350px;
 }
 
 
@@ -356,27 +353,46 @@ input:checked + .slider:before {
 
 .explain-text{
     position: absolute;
-    background: rgb(206, 206, 206);
+    background: rgb(61, 6, 95);
     border-radius: 25px;
     font-size: 15px;
     padding: 2px 8px; 
     bottom: 10px;
-    color: black;
+    color: rgb(255, 255, 255);
     cursor: default;
 }
 
 .explain-text-online{
     opacity: 0; 
     right: -45px;
-    bottom: -10px;
+    bottom: -25px;
 }
 
 .explain-text-reset {
     opacity: 0;
-    right: 45px;
-    bottom: -10px;
+    right: 130px;
+    bottom: -25px;
 }
 
+.btn-setting-field {
+    cursor: pointer;
+}
+
+
+.img-setting{
+    width: 50px;
+    height: 50px;
+}
+
+.explain-text-setting {
+    opacity: 0;
+    right: 45px;
+    bottom: -25px;
+}
+
+.btn-setting-field:hover > .explain-text-setting{
+    opacity: 1;
+}
 
 .img-restart{
     transition: transform 1s ease;
@@ -402,7 +418,7 @@ input:checked + .slider:before {
     bottom: 0;
     background: rgba(0,0,0,0.5);
     width: 100%;
-    height: 100%;
+    height: 200%;
     z-index: 2;
 }
 
@@ -466,22 +482,25 @@ input:checked + .slider:before {
 }
 
 .img-cross-loader{
-    filter: invert(100%); 
-    -webkit-filter: invert(100%);
+    /* filter: invert(100%);  */
+    /* -webkit-filter: invert(100%); */
     width: 100px;
-    height: 105px;
+    height: 100px;
     animation-duration: 1s;
     animation-name: loader; 
-    animation: 1s linear 0s normal none infinite running loader; 
+    animation: 0,3s linear 0s normal none infinite running loader; 
 }
 
 @keyframes loader {
     0%{
         transform: rotate(0deg);
     }
-    100%{
+    /* 50%{
+        transform: rotate(90deg);
+    } */100% {
         transform: rotate(360deg);
     }
+    
 }
 
 .btn-cross:active {
@@ -617,4 +636,74 @@ input:checked + .slider:before {
 
 .paint__over-yellow {
     background: rgb(255, 227, 148); 
+}
+/* chat */
+.chat-wrapper{
+    margin: 0 auto;
+}
+
+.form{
+    background: rgb(0, 0, 0, .15);
+    padding: 5px;
+    display: flex;
+    height: 50px;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    width: 300px;
+    margin: 25px auto;
+    max-width: 350px;
+}
+
+.name{
+    height: 35px;
+    background: beige;
+    padding: 15px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #222;
+    font-size: 14px;    
+    font-weight: 300;
+}
+.input{
+    height: 35px;
+    border-radius: 30px;
+    border: none;
+    margin: 5px;
+    padding: 0 25px;
+    display: flex;
+    width: 100%;
+    outline: none;
+}
+
+.btn {
+    background: #222;
+    border: none;
+    width: 100px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+    color: white;
+    border-radius: 30px;
+}
+
+.messages{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.messages > li {
+    padding: 10px;
+}
+
+.messages > li > span{
+    font-weight: 500;
+}
+
+.messages > li:nth-child(odd) {
+    background: #efefef;
 }

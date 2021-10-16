@@ -1,5 +1,7 @@
 // import {io} from 'socket.io-client';
+// import {io} from 'socket.io-client';
 import {socket, sendChoosingSide, sendReadyTwoPlayers} from '../API/sendGameState';
+// import {playingField, cell, createPlayingField} from './main';
 
 export const modalELem = document.querySelector('.modal');
 
@@ -70,6 +72,7 @@ socket.on('waiting opponent', (data) => {
   // для клиента2
   openModal(true, data);
   showLoader();
+  // changeTitle(titles.confirm);
   isAgreementGame = true;
   setActiveButton({lockedSideClass: `btn-${data}`});
   const agreeGame = modalELem.querySelector('.button-accept');
@@ -80,6 +83,14 @@ socket.on('waiting opponent', (data) => {
       sendChoosingSide('cross');
     }
     sendReadyTwoPlayers('ready');
+    // строить поле на данных первого клиента
+    /*     socket.on('start game', (data) => {
+      const {
+        n,
+        k,
+      } = data;
+      createPlayingField(playingField, n, cell, k);
+    }); */
   });
 });
 
