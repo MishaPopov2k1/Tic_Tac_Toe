@@ -71,7 +71,7 @@ __webpack_require__.r(__webpack_exports__);
 
 // export const socket = io(urlLocal);
 
- const socket = io(_getData__WEBPACK_IMPORTED_MODULE_3__.urlHeroku);
+const socket = io(_getData__WEBPACK_IMPORTED_MODULE_3__.urlHeroku);
 
 
 function sendCoordinatesOfMove(cellCoordinates) {
@@ -161,28 +161,6 @@ function savePlayersId(data) {
   localStorage.setItem('crossId', crossId);
   localStorage.setItem('zeroId', zeroId);
 };
-
-
-/***/ }),
-
-/***/ "./js/chat.js":
-/*!********************!*\
-  !*** ./js/chat.js ***!
-  \********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _API_sendGameState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../API/sendGameState */ "./API/sendGameState.js");
-
-const messages = document.querySelector('.messages');
-const form = document.querySelector('.form');
-const input = document.querySelector('.input');
-const nameBlock = document.querySelector('.name');
-
-
-// const userName = prompt('Ваше имя:');
-nameBlock.innerHTML = `${userName}`;
-
 
 
 /***/ }),
@@ -319,15 +297,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _API_sendGameState__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../API/sendGameState */ "./API/sendGameState.js");
 /* harmony import */ var _API_getData_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../API/getData.js */ "./API/getData.js");
 /* harmony import */ var _modal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modal */ "./js/modal.js");
-/* harmony import */ var _chat__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./chat */ "./js/chat.js");
-/* harmony import */ var _draw__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./draw */ "./js/draw.js");
+/* harmony import */ var _draw__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./draw */ "./js/draw.js");
 
 
 
 
 
 
-
+// import {getName} from './chat';
 
 
 
@@ -373,7 +350,7 @@ function makeTabActive(btn) {
   if (activeBtn) {
     if (btn === activeBtn) {
       activeBtn.classList.remove('active');
-      (0,_draw__WEBPACK_IMPORTED_MODULE_5__.resetPlayingField)(playingField, gameMenu, whoseMove);
+      (0,_draw__WEBPACK_IMPORTED_MODULE_4__.resetPlayingField)(playingField, gameMenu, whoseMove);
       return;
     } else {
       activeBtn.classList.remove('active');
@@ -420,7 +397,7 @@ function createPlayingField(playingField, n, cell, k) {
 
 playButton.addEventListener('click', (e) => {
   if (e.target.classList.contains('active')) {
-    (0,_draw__WEBPACK_IMPORTED_MODULE_5__.resetPlayingField)();
+    (0,_draw__WEBPACK_IMPORTED_MODULE_4__.resetPlayingField)();
     gameMenu.classList.add('hidden');
     whoseMove.classList.add('hidden');
     e.target.classList.remove('active');
@@ -442,7 +419,7 @@ playButton.addEventListener('click', (e) => {
 
 goButton.addEventListener('click', () => {
   if ((0,_settingField__WEBPACK_IMPORTED_MODULE_0__.setGameConditionsForNxN)() === true) {
-    (0,_draw__WEBPACK_IMPORTED_MODULE_5__.resetPlayingField)();
+    (0,_draw__WEBPACK_IMPORTED_MODULE_4__.resetPlayingField)();
     createPlayingField(playingField, _settingField__WEBPACK_IMPORTED_MODULE_0__.n, cell, _settingField__WEBPACK_IMPORTED_MODULE_0__.k);
     (0,_settingField__WEBPACK_IMPORTED_MODULE_0__.closeSettingModal)();
     (0,_API_sendGameState__WEBPACK_IMPORTED_MODULE_1__.sendFieldSizesForStart)({n: _settingField__WEBPACK_IMPORTED_MODULE_0__.n, k: _settingField__WEBPACK_IMPORTED_MODULE_0__.k});
@@ -455,12 +432,12 @@ goButton.addEventListener('click', () => {
 restartButton.addEventListener('click', () => {
   restartButton.classList.toggle('rotate');
   (0,_API_sendGameState__WEBPACK_IMPORTED_MODULE_1__.sendFieldSizesForStart)({n: _settingField__WEBPACK_IMPORTED_MODULE_0__.n, k: _settingField__WEBPACK_IMPORTED_MODULE_0__.k});
-  (0,_draw__WEBPACK_IMPORTED_MODULE_5__.resetWinCounter)();
+  (0,_draw__WEBPACK_IMPORTED_MODULE_4__.resetWinCounter)();
 });
 
 playAgainButton.addEventListener('click', () => {
   (0,_API_sendGameState__WEBPACK_IMPORTED_MODULE_1__.resetPlayingMatrix)();
-  (0,_draw__WEBPACK_IMPORTED_MODULE_5__.resetGameCells)(playingField);
+  (0,_draw__WEBPACK_IMPORTED_MODULE_4__.resetGameCells)(playingField);
 });
 
 playOnlineButton.addEventListener('click', (e) => {
