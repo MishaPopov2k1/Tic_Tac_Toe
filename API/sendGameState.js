@@ -5,7 +5,7 @@ import {urlHeroku, urlLocal} from './getData';
 
 // export const socket = io(urlLocal);
 
- export const socket = io(urlHeroku);
+export const socket = io(urlHeroku);
 
 
 export function sendCoordinatesOfMove(cellCoordinates) {

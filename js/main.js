@@ -12,7 +12,7 @@ import {sendFieldSizesForStart as sendConditionForStart, resetPlayingMatrix} fro
 import {getTitle} from '../API/getData.js';
 import {openModal} from './modal';
 
-import {getName} from './chat';
+// import {getName} from './chat';
 
 import {resetGameCells, resetWinCounter, resetPlayingField} from './draw';
 
