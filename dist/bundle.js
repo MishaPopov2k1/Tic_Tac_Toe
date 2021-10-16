@@ -30,7 +30,7 @@ const getJson = function(response) {
 
 
 async function getTitle() {
-  const title = await fetch(urlLocal+'/test')
+  const title = await fetch(urlHeroku+'/test')
       .then(getStatus)
       .then(getJson)
       .catch(function(error) {
@@ -69,9 +69,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const socket = io(_getData__WEBPACK_IMPORTED_MODULE_3__.urlLocal);
+// export const socket = io(urlLocal);
 
-// export const socket = io(urlHeroku);
+ const socket = io(_getData__WEBPACK_IMPORTED_MODULE_3__.urlHeroku);
 
 
 function sendCoordinatesOfMove(cellCoordinates) {
@@ -180,7 +180,7 @@ const input = document.querySelector('.input');
 const nameBlock = document.querySelector('.name');
 
 
-const userName = prompt('Ваше имя:');
+// const userName = prompt('Ваше имя:');
 nameBlock.innerHTML = `${userName}`;
 
 
